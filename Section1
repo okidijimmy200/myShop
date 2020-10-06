@@ -1,0 +1,39 @@
+Building an Online Shop::
+In this chapter, you will learn how to:
+• Create a product catalog
+• Build a shopping cart using Django sessions
+• Create custom context processors
+• Manage customer orders
+• Configure Celery in your project with RabbitMQ as a message broker
+• Send asynchronous notifications to customers using Celery
+• Monitor Celery using Flower
+
+Lecture 1:
+Creating an online shop project
+--Let's start with a new Django project to build an online shop. Your users will be
+able to browse through a product catalog and add products to a shopping cart.
+Finally, they will be able to check out the cart and place an order.
+
+• Creating the product catalog models, adding them to the administration site,
+and building the basic views to display the catalog
+• Building a shopping cart system using Django sessions to allow users to keep
+selected products while they browse the site
+• Creating the form and functionality to place orders on the site
+• Sending an asynchronous email confirmation to users when they place
+an order
+
+--For the price field, you use DecimalField instead of FloatField to avoid
+rounding issues.
+
+install pillow
+**************pip install Pillow==7.0.0************
+
+run
+**************python manage.py makemigrations*********
+
+then run
+*************python manage.py migrate*********
+
+Lecture 2:
+Registering catalog models on the administration site
+--dd models to admin for quickand easy managing categories and products
