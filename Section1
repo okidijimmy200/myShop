@@ -37,3 +37,14 @@ then run
 Lecture 2:
 Registering catalog models on the administration site
 --dd models to admin for quickand easy managing categories and products
+
+--You use the list_editable attribute in the ProductAdmin class to set the fields that
+can be edited from the list display page of the administration site
+
+run
+******************python manage.py createsuperuser***************8
+
+then open
+******http://127.0.0.1:8000/admin/shop/product/add/*****
+
+pg 30
