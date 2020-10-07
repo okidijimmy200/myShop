@@ -47,4 +47,20 @@ run
 then open
 ******http://127.0.0.1:8000/admin/shop/product/add/*****
 
-pg 30
+Lecture 3:
+Building catalog views::
+--In order to display the product catalog, you need to create a view to list all the
+products or filter products by a given category.
+
+--The product_detail view expects the id and slug parameters in order to
+retrieve the Product instance.
+
+--the slug in the URL to build SEO-friendly URLs for products.
+
+--You have defined two different URL patterns for the product_list view: a pattern named product_list,
+which calls the product_list view without any parameters,
+
+--You added a pattern for
+the product_detail view, which passes the id and slug parameters to the view
+in order to retrieve a specific product.
+
