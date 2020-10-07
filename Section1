@@ -64,3 +64,7 @@ which calls the product_list view without any parameters,
 the product_detail view, which passes the id and slug parameters to the view
 in order to retrieve a specific product.
 
+Lecture 4:
+Creating catalog templates
+--uses the categories context variable to display all the categories in a sidebar, and
+products to display the products of the current page.
