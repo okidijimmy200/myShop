@@ -179,4 +179,7 @@ create a new cart.py file in the cart application
 --You will build your cart dictionary with product IDs as keys, and for each product
 key, a dictionary will be a value that includes quantity and price.
 
-pg 42
+--You use the product ID as a key in the cart's content dictionary. You convert the
+product ID into a string because Django uses JSON to serialize session data, and
+JSON only allows string key names. The product ID is the key, and the value
+that you persist is a dictionary with quantity and price figures for the product
