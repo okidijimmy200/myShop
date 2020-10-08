@@ -1,0 +1,14 @@
+Lecture 1:
+Creating shopping cart views::
+We need to implement a view which;
+• A view to add or update items in the cart that can handle current and new
+quantities
+• A view to remove items from the cart
+• A view to display cart items and totals
+
+Adding items to the cart::
+--In order to add items to the cart, you need a form that allows the user to select
+a quantity.
+-create aforms.py file
+
+--create aview to mange the cart
