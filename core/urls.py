@@ -6,7 +6,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('cart/', include('cart.urls', namespace='cart')), #this pattern shd be above shop.urls bse its more restrictive
+    #this pattern shd be above shop.urls bse its more restrictive
+    path('cart/', include('cart.urls', namespace='cart')), 
 # URLs for the shop application under a custom namespace named shop.
     path('', include('shop.urls', namespace='shop')),
 

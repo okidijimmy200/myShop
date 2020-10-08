@@ -12,3 +12,11 @@ a quantity.
 -create aforms.py file
 
 --create aview to mange the cart
+
+Lecture 2:
+Building a template to display the cart::
+--need
+to create a template for the cart_detail view to display cart items and totals
+
+Adding products to the cart::
+--need to add an Add to cart button to the product detail page.

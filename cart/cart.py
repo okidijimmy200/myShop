@@ -17,23 +17,20 @@ class Cart(object):
             # save an empty cart in the session
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
-"""You will build your cart dictionary with product IDs as keys, and for each product
-key, a dictionary will be a value that includes quantity and price.
-guarantee that a product will not be added more than once to the cart.
-This way, you can also simplify retrieving cart items"""
+# You will build your cart dictionary with product IDs as keys, and for each product
+# key, a dictionary will be a value that includes quantity and price.
+# guarantee that a product will not be added more than once to the cart.
+# This way, you can also simplify retrieving cart items
 # --------------------------------------------------------------------
-'''In the __iter__() method, you retrieve the Product instances that are present
-in the cart to include them in the cart items. You copy the current cart in the cart
-variable and add the Product instances to it. Finally, you iterate over the cart items,
-converting each item's price back into decimal, and adding a total_price attribute
-to each item. This __iter__() method will allow you to easily iterate over the items
-in the cart in views and templates'''
+# In the __iter__() method, you retrieve the Product instances that are present
+# in the cart to include them in the cart items. You copy the current cart in the cart
+# variable and add the Product instances to it. Finally, you iterate over the cart items,
+# converting each item's price back into decimal, and adding a total_price attribute
+# to each item. This __iter__() method will allow you to easily iterate over the items
+# in the cart in views and templates
 
     def __iter__(self):
-        """
-        Iterate over the items in the cart and get the products
-        from the database.
-        """
+# Iterate over the items in the cart and get the products from the database.
         product_ids = self.cart.keys()
         # get the product objects and add them to the cart
         products = Product.objects.filter(id__in=product_ids)
@@ -61,10 +58,10 @@ in the cart in views and templates'''
         Add a product to the cart or update its quantity.
         """
 # ----------------------------------------------------------
-'''You use the product ID as a key in the cart's content dictionary. You convert the
-product ID into a string because Django uses JSON to serialize session data, and
-JSON only allows string key names. The product ID is the key, and the value
-that you persist is a dictionary with quantity and price figures for the product'''
+# You use the product ID as a key in the cart's content dictionary. You convert the
+# product ID into a string because Django uses JSON to serialize session data, and
+# JSON only allows string key names. The product ID is the key, and the value
+# that you persist is a dictionary with quantity and price figures for the product
         product_id = str(product.id)
 # The product's price is converted from decimal into a string in order to serialize it.
         if product_id not in self.cart:
@@ -79,8 +76,8 @@ that you persist is a dictionary with quantity and price figures for the product
     def save(self):
         # mark the session as "modified" to make sure it gets saved
         self.session.modified = True
-'''The save() method marks the session as modified using session.modified =
-True. This tells Django that the session has changed and needs to be saved.'''
+# The save() method marks the session as modified using session.modified =
+# True. This tells Django that the session has changed and needs to be saved.
 
     def remove(self, product):
         """

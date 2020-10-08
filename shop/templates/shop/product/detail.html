@@ -1,21 +1,27 @@
 {% extends "shop/base.html" %}
 {% load static %}
+
 {% block title %}
-{{ product.name }}
+  {{ product.name }}
 {% endblock %}
+
 {% block content %}
-<div class="product-detail">
-    <img src="{% if product.image %}{{ product.image.url }}{% else %}
-        {% static "img/no_image.png" %}{% endif %}">
+  <div class="product-detail">
+    <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
     <h1>{{ product.name }}</h1>
     <h2>
-<!-- In the preceding code, you call the get_absolute_url() method on the related
+        <!-- In the preceding code, you call the get_absolute_url() method on the related
 category object to display the available products that belong to the same category -->
-        <a href="{{ product.category.get_absolute_url }}">
-            {{ product.category }}
-        </a>
+      <a href="{{ product.category.get_absolute_url }}">
+        {{ product.category }}
+      </a>
     </h2>
     <p class="price">${{ product.price }}</p>
+    <form action="{% url "cart:cart_add" product.id %}" method="post">
+      {{ cart_product_form }}
+      {% csrf_token %}
+      <input type="submit" value="Add to cart">
+    </form>
     {{ product.description|linebreaks }}
-</div>
+  </div>
 {% endblock %}

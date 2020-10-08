@@ -6,7 +6,7 @@ from .forms import CartAddProductForm
 
 # view for adding products to the cart or updating quantities for existing products.
 @require_POST #require_POST decorator to allow only POST requests.
-'''The view receives the product ID as a parameter.'''
+# The view receives the product ID as a parameter.
 def cart_add(request, product_id):
     cart = Cart(request)
 # retrieve the Product instance with the given ID
