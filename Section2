@@ -25,5 +25,36 @@ Updating product quantities in the cart::
 --When users see the cart, they might want to change product quantities before placing
 an order. You are going to allow users to change quantities from the cart detail page.
 
+Lecture 3:
+Creating a context processor for the current cart
+--you shd be able to show number of items in the cart and the total cost at the header section
+--Since this has to be displayed
+on all pages, you need to build a context processor to include the current cart in the
+request context, regardless of the view that processes the request
 
+Context processors::
+--A context processor is a Python function that takes the request object as an
+argument and returns a dictionary that gets added to the request context. Context
+processors come in handy when you need to make something available globally
+to all templates.
+
+Setting the cart into the request context::
+--Let's create a context processor to set the current cart into the request context.
+With it, you will be able to access the cart in any template.
+
+--create a contextprocessor.py file
+--In your context processor, you instantiate the cart using the request object and make
+it available for the templates as a variable named cart.
+
+--Edit the settings.py file of your project and add cart.context_processors.cart
+to the context_processors option inside the TEMPLATES setting,
+
+--The cart context processor will be executed every time a template is rendered
+using Django's RequestContext
+
+--NB:
+Context processors are executed in all the requests that use
+RequestContext. You might want to create a custom template
+tag instead of a context processor if your functionality is not
+needed in all templates, especially if it involves database queries
 

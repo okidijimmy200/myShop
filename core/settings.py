@@ -64,11 +64,18 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processors.cart',
             ],
         },
     },
 ]
-
+'''
+# django.template.context_processors.debug: This sets the Boolean debug and sql_queries variables in the context, representing the list of SQL queries executed in the request
+# django.template.context_processors.request:This sets the request variable in the context
+# django.contrib.auth.context_processors.auth: This sets the user variable in the request
+# django.contrib.messages.context_processors.messages: This sets a messages variable in the context containing all the messages that have
+been generated using the messages framework
+'''
 WSGI_APPLICATION = 'core.wsgi.application'
 
 
