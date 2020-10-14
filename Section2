@@ -20,3 +20,10 @@ to create a template for the cart_detail view to display cart items and totals
 
 Adding products to the cart::
 --need to add an Add to cart button to the product detail page.
+
+Updating product quantities in the cart::
+--When users see the cart, they might want to change product quantities before placing
+an order. You are going to allow users to change quantities from the cart detail page.
+
+
+
