@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'shop.apps.ShopConfig',
     'cart.apps.CartConfig',
+    'orders.apps.OrdersConfig',
 ]
 
 MIDDLEWARE = [
@@ -70,6 +71,7 @@ TEMPLATES = [
     },
 ]
 '''
+explanations for the context_processors:
 # django.template.context_processors.debug: This sets the Boolean debug and sql_queries variables in the context, representing the list of SQL queries executed in the request
 # django.template.context_processors.request:This sets the request variable in the context
 # django.contrib.auth.context_processors.auth: This sets the user variable in the request

@@ -58,3 +58,36 @@ RequestContext. You might want to create a custom template
 tag instead of a context processor if your functionality is not
 needed in all templates, especially if it involves database queries
 
+Lecture 5:
+Registering customer orders::
+--When a shopping cart is checked out, you need to save an order into the database.
+Orders will contain information about customers and the products they are buying.
+
+--create a new app for managing orders
+
+*******python manage.py startapp orders********
+
+Creating order models::
+--You will need a model to store the order details and a second model to store items
+bought, including their price and quantity.
+
+python manage.py makemigrations after writing the order model
+
+***********python manage.py migrate******
+
+pIncluding order models in the administration
+site::
+--Let's add the order models to the administration site
+--You use a ModelInline class for the OrderItem model to include it as an inline
+in the OrderAdmin class. An inline allows you to include a model on the same edit
+page as its related model
+
+Creating customer orders::
+--You will use the order models that you created to persist the items contained in the
+shopping cart when the user finally places an order.
+A new order will be created following these steps:
+• Present a user with an order form to fill in their data
+• Create a new Order instance with the data entered, and create an associated
+OrderItem instance for each item in the cart
+• Clear all the cart's contents and redirect the user to a success page
+
