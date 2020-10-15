@@ -60,7 +60,7 @@ cart_remove URL including the product ID. -->
   </table>
   <p class="text-right">
     <a href="{% url "shop:product_list" %}" class="button light">Continue shopping</a>
-    <a href="" class="button">
+    <a href="{% url "orders:order_create" %}" class="button">
       Checkout
     </a>
   </p>

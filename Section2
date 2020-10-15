@@ -91,3 +91,16 @@ A new order will be created following these steps:
 OrderItem instance for each item in the cart
 • Clear all the cart's contents and redirect the user to a success page
 
+in the views
+Depending on the request method, you perform
+the following tasks:
+• GET request: Instantiates the OrderCreateForm form and renders the
+orders/order/create.html template.
+• POST request: Validates the data sent in the request. If the data is valid,
+you create a new order in the database using order = form.save(). You
+iterate over the cart items and create an OrderItem for each of them. Finally,
+you clear the cart's contents and render the template orders/order/
+created.html.
+
+--Users can now navigate from the cart detail page to the order form.
+
