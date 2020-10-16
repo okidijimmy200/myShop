@@ -104,3 +104,85 @@ created.html.
 
 --Users can now navigate from the cart detail page to the order form.
 
+Lecture 3:
+Launching asynchronous tasks with Celery
+--Everything you execute in a view affects response times. In many situations,
+you might want to return a response to the user as quickly as possible and let the
+server execute some process asynchronously. This is especially relevant for timeconsuming
+processes or processes subject to failure, which might need a retry
+policy
+
+--Celery is a distributed task queue that can process vast amounts of messages. Using
+Celery, not only can you create asynchronous tasks easily and let them be executed
+by workers as soon as possible, but you can also schedule them to run at a specific
+time
+
+Installing Celery::
+****************pip install celery==4.4.2****************
+
+--Celery requires a message broker in order to handle requests from an external
+source. A message broker is used to translate messages to a formal messaging
+protocol and manage message queues for multiple receivers, providing reliable
+storage and guaranteed message delivery. You use a message broker to send
+messages to Celery workers, which process tasks as they receive them
+
+Installing RabbitMQ::
+--https://www.rabbitmq.com/download.html
+
+start rabbitmq-server
+Adding Celery to your project::
+--You have to provide a configuration for the Celery instance
+-create a file near settings.py called celery.py
+
+--You set the DJANGO_SETTINGS_MODULE variable for the Celery command-line
+program.
+
+--You need to import the celery module in the __init__.py file of your project to
+make sure it is loaded when Django starts
+
+--Edit the core/__init__.py
+
+--The CELERY_ALWAYS_EAGER setting allows you to execute tasks
+locally in a synchronous way, instead of sending them to the queue.
+This is useful for running unit tests or executing the application in
+your local environment without running Celery.
+
+Adding asynchronous tasks to your application::
+--create an asynchronous task to send an email notification to
+your users when they place an order. The convention is to include asynchronous
+tasks for your application in a tasks module within your application directory.
+
+--create a tasks.py file
+--task. Your task function
+receives an order_id parameter. It's always recommended to only pass IDs to task
+functions and lookup objects when the task is executed.
+
+--If you don't want to set up email settings,
+you can tell Django to write emails to the console by adding the following setting to
+the settings.py file:
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+NB:
+Use asynchronous tasks not only for time-consuming processes,
+but also for other processes that do not take so much time to be
+executed but which are subject to connection failures or require
+a retry policy.
+
+--start the Celery worker from your project directory, using
+the following command:
+****************************celery -A core worker -l info*******************
+
+
+Monitoring Celery::
+--You might want to monitor the asynchronous tasks that are executed. Flower is a
+web-based tool for monitoring Celery.
+
+***************pip install flower==0.9.3****************************
+
+
+to run flower
+***********celery -A core flower***************
+
+open http://localhost:5555/dashboard to see
+the active Celery workers and asynchronous task statistics:
+
