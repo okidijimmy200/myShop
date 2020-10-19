@@ -56,3 +56,33 @@ sandbox. Once you go live and create a real account, you will
 need to change this to Environment.Production. Braintree
 will provide you with a new merchant ID and private/public keys
 for the production environment
+
+Lecture 2:
+Integrating the payment gateway:
+--The checkout process will work as follows:
+1. Add items to the shopping cart
+2. Check out the shopping cart
+3. Enter credit card details and pay
+
+app to manage payments
+*****python manage.py startapp payment*******8
+
+--After clients place an order, you need to redirect them to the payment process.
+edit thee views.py file of orders
+
+--With this code, after successfully creating an order, you set the order ID in the
+current session using the order_id session key.
+
+--you
+need to run Celery in order for the order_created task to be queued and executed.
+
+--Every time an order is created in Braintree, a unique transaction identifier is
+generated. You will add a new field to the Order model of the orders application
+to store the transaction ID. This will allow you to link each order with its related
+Braintree transaction
+
+-sync the migrations
+*****python manage.py makemigrations*********8
+
+--apply the migrations
+*****python manage.py migrate*******

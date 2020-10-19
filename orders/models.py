@@ -12,6 +12,9 @@ class Order(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
+#  Every time an order is created in Braintree, a unique transaction identifier is generated. You will add a new field to the Order model of the orders application
+# to store the transaction ID. This will allow you to link each order with its related Braintree transaction
+    braintree_id = models.CharField(max_length=150, blank=True)
 
     class Meta:
         ordering = ('-created',)

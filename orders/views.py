@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from cart.cart import Cart
 from .models import OrderItem
 from .forms import OrderCreateForm
@@ -21,9 +22,15 @@ def order_create(request):
             cart.clear()
             # launch asynchronous task
             order_created.delay(order.id) #You call the delay() method of the task to execute it asynchronously.
-            return render(request,
-                          'orders/order/created.html',
-                          {'order': order})
+             # set the order in the session
+# -------------------------------------------------------------------------------
+#after successfully creating an order, you set the order ID in the current session using the order_id session key.
+            request.session['order_id'] = order.id
+            # redirect for payment
+# --------------------------------------------------------------------------------
+# redirect the user to the payment:process URL,
+            return redirect(reverse('payment:process'))
+# NB: you need to run Celery in order for the order_created task to be queued and executed.
     else:
         form = OrderCreateForm()
     return render(request,
