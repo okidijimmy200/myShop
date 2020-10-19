@@ -86,3 +86,64 @@ Braintree transaction
 
 --apply the migrations
 *****python manage.py migrate*******
+
+Lecture 4:
+Integrating Braintree using Hosted Fields
+--The Hosted Fields integration allows you to create your own payment form using
+custom styles and layouts. An iframe is added dynamically to the page using the
+Braintree JavaScript software development kit (SDK).
+
+--When the customer submits the form, Hosted Fields collects the card details securely and attempts to tokenize them. If tokenization
+succeeds, you can send the generated token nonce to your view to make a transaction using the Python braintree module. 
+--A token nonce is a secure, onetime-use reference to payment information. It allows you to send sensitive payment
+information to Braintree without touching the raw data
+
+the checkout process will b as follows:
+1. In the view, a client token is generated using the braintree Python module.
+This token is used in the next step to instantiate the Braintree JavaScript
+client; it's not the payment token nonce.
+2. The view renders the checkout template. The template loads the Braintree
+JavaScript SDK using the client token and generates the iframe with the
+hosted payment form fields.
+3. Users enter their credit card details and submit the form. A payment token
+nonce is generated with the Braintree JavaScript client. You send the token
+to your view with a POST request.
+4. The payment view receives the token nonce and you use it to generate
+a transaction using the braintree Python module.
+
+
+run the rabbitmq-server
+*************************rabbitmq-server***************
+
+then
+*******************celery -A core worker -l info**************
+
+then run
+******************python manage.py runserver***********
+
+--Braintree provides a list of successful and unsuccessful credit cards so that you can
+test all possible scenarios
+
+CARD:4111 1111 1111 1111
+CV:123
+EXPIRATION_DATE=12/28
+
+check your sandbox account under login
+
+checkout http://127.0.0.1:8000/admin/orders/order/ to see the orders
+--The order should now be marked as paid and contain the related Braintree
+transaction ID
+
+--Note that the payment_process view does not handle transaction declines. Braintree
+provides you with the processor response codes that are returned by the credit card
+processor. These are especially useful to know why a transaction might have been
+declined. You can obtain a response code using result.transaction.processor_
+response_code and its associated response text using result.transaction.
+processor_response_text.
+
+Going live::
+--Once you have tested your environment, you can create a real Braintree account at
+https://www.braintreepayments.com. Once you are ready to move into production,
+remember to change your live environment credentials in the settings.py
+file of your project and use braintree.Environment.Production to set up
+your environment.
