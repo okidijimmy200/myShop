@@ -142,3 +142,23 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 CART_SESSION_ID = 'cart'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+'''You use Environment.Sandbox for integrating the
+sandbox. Once you go live and create a real account, you will
+need to change this to Environment.Production. Braintree
+will provide you with a new merchant ID and private/public keys
+for the production environment'''
+
+# Braintree settings
+BRAINTREE_MERCHANT_ID = 'z7jjywzz4zxjv4s8'  # Merchant ID
+BRAINTREE_PUBLIC_KEY = 'y78zqqth9cp39s29'   # Public Key
+BRAINTREE_PRIVATE_KEY = 'c8e91874fce7225df2803cc645d24f39'  # Private key
+
+import braintree
+
+BRAINTREE_CONF = braintree.Configuration(
+    braintree.Environment.Sandbox,
+    BRAINTREE_MERCHANT_ID,
+    BRAINTREE_PUBLIC_KEY,
+    BRAINTREE_PRIVATE_KEY
+)

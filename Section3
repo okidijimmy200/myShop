@@ -1,0 +1,58 @@
+Managing Payments and Orders
+--In this chapter, you will learn how to integrate a payment gateway into your site
+to let users pay by credit card
+
+You will also extend the administration site with
+different features.
+In this chapter, you will:
+• Integrate a payment gateway into your project
+• Export orders to CSV files
+• Create custom views for the administration site
+• Generate PDF invoices dynamically
+
+Lecture 1:
+Integrating a payment gateway:;
+---A payment gateway allows you to process payments online. Using a payment
+gateway, you can manage customers' orders and delegate payment processing
+to a reliable, secure third party.
+
+payment gateway we will use is called Braintree, which is used by popular online services such as Uber
+and Airbnb
+--Braintree provides an API that allows you to process online payments with multiple
+payment methods, such as credit card, PayPal, Google Pay, and Apple Pay
+
+--Braintree provides different integration options. The simplest is the Drop-in
+integration, which contains a preformatted payment form
+--to customize the behavior and experience of your checkout, you are going to use
+the advanced Hosted Fields integration
+
+--Certain payment fields on the checkout page, such as the credit card number, CVV
+number, or expiration date, must be hosted securely. The Hosted Fields integration
+hosts the checkout fields on the payment gateway's domain and renders an iframe
+to present the fields to users. This provides you with the ability to customize the look
+and feel of the payment form, while ensuring that you are compliant with Payment
+Card Industry (PCI) requirements. Since you can customize the look and feel of the
+form fields, users won't notice the iframe
+
+Creating a Braintree sandbox account::
+--u need Braintree acccount to integrate the payment gateway into your project.
+
+*****https://www.braintreepayments.com/sandbox*****
+
+then log into
+*****https://sandbox.braintreegateway.com/login*******
+
+--Your merchant ID and public/private keys will be displayed wch will be needed to authenticate requests to the Braintree API
+
+Installing the Braintree Python module::
+--Braintree provides a Python module that simplifies dealing with its API. You are
+going to integrate the payment gateway into your project using the braintree
+module
+
+*******pip install braintree==3.59.0********
+
+--You use Environment.Sandbox for integrating the
+sandbox. Once you go live and create a real account, you will
+need to change this to Environment.Production. Braintree
+will provide you with a new merchant ID and private/public keys
+for the production environment
