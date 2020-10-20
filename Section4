@@ -1,0 +1,35 @@
+Lecture 1:
+Exporting orders to CSV files
+--Sometimes, you might want to export the information contained in a model to a file
+so that you can import it in another system. One of the most widely used formats
+to export/import data is comma-separated values (CSV).
+
+Adding custom actions to the administration site:
+--Django offers a wide range of options to customize the administration site. You are
+going to modify the object list view to include a custom administration action.
+
+--An administration action works as follows: a user selects objects from the
+administration object list page with checkboxes, then they select an action to perform
+on all of the selected items, and execute the actions.
+
+--You can create a custom action by writing a regular function that receives the following parameters:
+• The current ModelAdmin being displayed
+• The current request object as an HttpRequest instance
+• A QuerySet for the objects selected by the user
+
+--This function will be executed when the action is triggered from the
+administration site
+
+--You are going to create a custom administration action to download a list of orders
+as a CSV file
+
+--edit the admin of order file
+create export_to_csv function
+
+--add the new export_to_csv administration action to the OrderAdmin class
+
+--Select some orders and choose the Export to CSV action from the select box, then
+click the Go button. Your browser will download the generated CSV file named
+order.csv. Open the downloaded file using a text editor. You should see content
+with the following format, including a header row and a row for each Order object
+you selected
