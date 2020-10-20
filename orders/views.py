@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
+from django.contrib.admin.views.decorators import staff_member_required
+from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from cart.cart import Cart
+from .models import Order
 from .models import OrderItem
 from .forms import OrderCreateForm
 from .tasks import order_created
@@ -47,3 +50,12 @@ you create a new order in the database using order = form.save(). You
 iterate over the cart items and create an OrderItem for each of them. Finally,
 you clear the cart's contents and render the template orders/order/
 created.html.'''
+
+# staff_member_required decorator checks that both the is_active and is_ staff fields of the user requesting the page are set to True.
+@staff_member_required
+# you get the Order object with the given ID and render a template to display the order.
+def admin_order_detail(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    return render(request,
+                  'admin/orders/order/detail.html',
+                  {'order': order})

@@ -33,3 +33,29 @@ click the Go button. Your browser will download the generated CSV file named
 order.csv. Open the downloaded file using a text editor. You should see content
 with the following format, including a header row and a row for each Order object
 you selected
+
+Lecture 2:
+Extending the administration site with custom views
+--Sometimes, you may want to customize the administration site beyond what is
+possible through configuring ModelAdmin, creating administration actions, and
+overriding administration templates. You might want to implement additional
+functionalities that are not available in existing administration views or templates.
+
+--If this is the case, you need to create a custom administration view. With a custom
+view, you can build any functionality you want; you just have to make sure that only
+staff users can access your view and that you maintain the administration look and
+feel by making your template extend an administration template.
+
+--to create a custom view, edit the view of orderfile
+
+NB:
+You can also override an administration template if you need to. To do so, copy
+a template into your templates/ directory, keeping the same relative path and
+filename. Django's administration site will use your custom template instead of
+the default one
+
+--Avoid using mark_safe on input that has come from the user to
+avoid cross-site scripting (XSS). XSS enables attackers to inject
+client-side scripts into web content viewed by other users.
+
+--in the admin page, each row now has a link
