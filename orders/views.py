@@ -1,10 +1,13 @@
+import weasyprint
 from django.shortcuts import render, redirect
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import get_object_or_404
+from django.conf import settings
+from django.http import HttpResponse
+from django.template.loader import render_to_string
 from django.urls import reverse
 from cart.cart import Cart
-from .models import Order
-from .models import OrderItem
+from .models import Order, OrderItem
 from .forms import OrderCreateForm
 from .tasks import order_created
 
@@ -59,3 +62,25 @@ def admin_order_detail(request, order_id):
     return render(request,
                   'admin/orders/order/detail.html',
                   {'order': order})
+  
+# staff_member_required decorator to make sure only staff users can access this view.
+@staff_member_required
+# view to generate a PDF invoice for an order.
+def admin_order_pdf(request, order_id):
+    # You get the Order object with the given ID
+    order = get_object_or_404(Order, id=order_id)
+# use the render_to_string() function provided by Django to render orders/order/pdf.html.
+# The rendered HTML is saved in the html variable.
+    html = render_to_string('orders/order/pdf.html',
+                            {'order': order})
+# you generate a new HttpResponse object specifying the application/ pdf content type
+    response = HttpResponse(content_type='application/pdf')
+# the Content-Disposition header to specify the filename
+    response['Content-Disposition'] = f'filename=order_{order.id}.pdf'
+# WeasyPrint to generate a PDF file from the rendered HTML code and write the file to the HttpResponse object.
+    weasyprint.HTML(string=html).write_pdf(response,
+# You use the static file css/pdf.css to add CSS styles to the generated PDF file. Then, you load it from the local path by using the STATIC_ROOT setting.
+        stylesheets=[weasyprint.CSS(
+            settings.STATIC_ROOT + 'css/pdf.css')])
+# you return the generated response.
+    return response

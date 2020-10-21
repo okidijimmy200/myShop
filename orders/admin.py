@@ -46,11 +46,17 @@ def order_detail(obj):
 # Django escapes HTML output by default. You have to use the mark_safe function to avoid auto-escaping.
     return mark_safe(f'<a href="{url}">View</a>')
 
+def order_pdf(obj):
+    url = reverse('orders:admin_order_pdf', args=[obj.id])
+    return mark_safe(f'<a href="{url}">PDF</a>')
+# If you specify a short_description attribute for your callable, Django will use it for the name of the column
+order_pdf.short_description = 'Invoice'
+
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'first_name', 'last_name', 'email',
                     'address', 'postal_code', 'city', 'paid',
-                    'created', 'updated', order_detail]
+                    'created', 'updated', order_detail, order_pdf]
     # order_detail to display the link:
     list_filter = ['paid', 'created', 'updated']
 # You use a ModelInline class for the OrderItem model to include it as an inline in the OrderAdmin class. An inline allows you to include a model on the same edit

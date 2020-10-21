@@ -59,3 +59,61 @@ avoid cross-site scripting (XSS). XSS enables attackers to inject
 client-side scripts into web content viewed by other users.
 
 --in the admin page, each row now has a link
+
+Lecture 3:
+Generating PDF invoices dynamically::
+--Now that you have a complete checkout and payment system, you can generate
+a PDF invoice for each order.
+
+--One popular library to generate PDFs with Python code is ReportLab.
+
+--In most cases, you will have to add custom styles and formatting to your PDF
+files. You will find it more convenient to render an HTML template and convert it
+into a PDF file, keeping Python away from the presentation layer.
+
+--we will use weasyprint to generate PDF files
+
+Installing WeasyPrint::
+--First, install WeasyPrint's dependencies for your operating system from https://
+weasyprint.readthedocs.io/en/latest/install.html.
+
+--, WeasyPrint needs the Pango, cairo and GDK-PixBuf libraries. They are required for the graphical stuff: Text and image rendering.
+
+*****python -m pip install --upgrade pip setuptools********
+
+****pip install WeasyPrint==51*****
+
+Creating a PDF template::
+--You need an HTML document as input for WeasyPrint. You are going to create an
+HTML template, render it using Django, and pass it to WeasyPrint to generate the
+PDF file.
+--This is the template for the PDF invoice. In this template, you display all order
+details and an HTML <table> element including the products. You also include
+a message to display whether the order has been paid.
+
+Rendering PDF files::
+--You are going to create a view to generate PDF invoices for existing orders using the
+administration site
+
+--Since you need to use the STATIC_ROOT setting, you have to add it to your project.
+This is the project's path where static files reside. Edit the settings.py file of the
+myshop project
+
+--Then, run the following command:
+***************python manage.py collectstatic*************
+
+--The collectstatic command copies all static files from your applications into the
+directory defined in the STATIC_ROOT setting.
+
+--This allows each application to provide
+its own static files using a static/ directory containing them. You can also provide
+additional static files sources in the STATICFILES_DIRS setting. All of the directories
+specified in the STATICFILES_DIRS list will also be copied to the STATIC_ROOT
+directory when collectstatic is executed. Whenever you execute collectstatic
+again, you will be asked if you want to override the existing static files.
+
+--Now you can edit the administration list display page for the Order model to
+add a link to the PDF file for each result.
+
+--Ensure the development server is started. Open http://127.0.0.1:8000/admin/
+orders/order/ in your browser.
