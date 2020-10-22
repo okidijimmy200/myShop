@@ -1,0 +1,37 @@
+Extending Your Shop
+--In this chapter, you will add a coupon system to your shop. You will also learn how
+internationalization and localization work, and you will build a recommendation
+engine
+
+This chapter will cover the following points:
+• Creating a coupon system to apply discounts
+• Adding internationalization to your project
+• Using Rosetta to manage translations
+• Translating models using django-parler
+• Building a product recommendation engine
+
+Lecture 1:
+Creating a coupon system:
+--Many online shops give out coupons to customers that can be redeemed for
+discounts on their purchases. An online coupon usually consists of a code that is
+given to users and is valid for a specific time frame.
+
+--You are going to create a coupon system for your shop. Your coupons will be valid
+for customers in a certain time frame. The coupons will not have any limitations
+in terms of the number of times they can be redeemed,
+--you will need to create
+a model to store the coupon code, a valid time frame, and the discount to apply
+
+Create a new application inside the myshop project using the following command:
+
+************python manage.py startapp coupons****************
+
+Building the coupon model::
+Run the following command to generate the initial migration for the coupons
+application:
+**************python manage.py makemigrations***********
+
+Then, execute the next command to apply migrations:
+******************python manage.py migrate***************
+
+--add the coupon to the adminstration site
