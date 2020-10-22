@@ -79,4 +79,112 @@ Apply the new migration with the following command:
 
 make an order
 
+Lecture 3:
+Adding internationalization and localization
+
+--Django offers full internationalization and localization support. It allows you to
+translate your application into multiple languages and it handles locale-specific
+formatting for dates, times, numbers, and timezones.
+
+--Internationalization (frequently
+abbreviated to i18n) is the process of adapting software for the potential use of
+different languages and locales, so that it isn't hardwired to a specific language
+or locale.
+
+--Localization (abbreviated to l10n) is the process of actually translating
+the software and adapting it to a particular locale.
+
+Internationalization with Django::
+--The internationalization framework allows you to easily mark strings for
+translation, both in Python code and in your templates. It relies on the GNU gettext
+toolset to generate and manage message files. A message file is a plain text file that
+represents a language. It contains a part, or all, of the translation strings found in
+your application and their respective translations for a single language. Message
+files have the .po extension. Once the translation is done, message files are compiled
+to offer rapid access to translated strings. The compiled translation files have the
+.mo extension.
+
+Internationalization and localization settings:;
+• USE_I18N: A Boolean that specifies whether Django's translation system is
+enabled. This is True by default.
+• USE_L10N: A Boolean indicating whether localized formatting is enabled.
+When active, localized formats are used to represent dates and numbers.
+This is False by default.
+• USE_TZ: A Boolean that specifies whether datetimes are timezone-aware.
+When you create a project with the startproject command, this is set
+to True.
+• LANGUAGE_CODE: The default language code for the project. This is in
+standard language ID format, for example, 'en-us' for American English,
+or 'en-gb' for British English. This setting requires USE_I18N to be set
+to True in order to take effect. You can find a list of valid language IDs
+at http://www.i18nguy.com/unicode/language-identifiers.html.
+• LANGUAGES: A tuple that contains available languages for the project. They
+come in two tuples of a language code and language name. You can see the
+list of available languages at django.conf.global_settings. When you
+choose which languages your site will be available in, you set LANGUAGES
+to a subset of that list.
+• LOCALE_PATHS: A list of directories where Django looks for message files
+containing translations for the project.
+• TIME_ZONE: A string that represents the timezone for the project. This is set
+to 'UTC' when you create a new project using the startproject command.
+You can set it to any other timezone, such as 'Europe/Madrid'.
+
+Internationalization management commands::
+• makemessages: This runs over the source tree to find all strings marked
+for translation and creates or updates the .po message files in the locale
+directory. A single .po file is created for each language.
+• compilemessages: This compiles the existing .po message files to .mo files
+that are used to retrieve translations
+
+--You will need the gettext toolkit to be able to create, update, and compile message
+files.
+
+For Windows,
+follow the steps at https://docs.djangoproject.com/en/3.0/topics/i18n/
+translation/#gettext-on-windows.
+
+Lecture 4:
+How to add translations to a Django project::
+--process of internationalizating ur project
+1. Mark strings for translation in your Python code and your templates
+2. Run the makemessages command to create or update message files that
+include all translation strings from your code
+3. Translate the strings contained in the message files and compile them using
+the compilemessages management command
+
+How Django determines the current language::
+--Django comes with a LocaleMiddleware middleware that determines the current language based on
+the request data tht performs the following tasks
+1. If you are using i18n_patterns, that is, you are using translated URL
+patterns, it looks for a language prefix in the requested URL to determine
+the current language.
+2. If no language prefix is found, it looks for an existing LANGUAGE_SESSION_
+KEY in the current user's session.
+3. If the language is not set in the session, it looks for an existing cookie with
+the current language. A custom name for this cookie can be provided in
+the LANGUAGE_COOKIE_NAME setting. By default, the name for this cookie
+is django_language.
+4. If no cookie is found, it looks for the Accept-Language HTTP header
+of the request.
+5. If the Accept-Language header does not specify a language, Django uses
+the language defined in the LANGUAGE_CODE setting.
+
+--By default, Django will use the language defined in the LANGUAGE_CODE setting uness ur using LocaleMiddleware
+
+Preparing your project for internationalization::
+--You are going to create an
+English and a Spanish version for your shop. Edit the settings.py file of your
+project and add the following LANGUAGES setting
+
+--Add 'django.middleware.locale.LocaleMiddleware' to the MIDDLEWARE
+setting.
+
+it shd be after SessionMiddleware and before CommonMiddleware
+
+The order of middleware classes is very important because
+each middleware can depend on data set by other middleware
+executed previously. Middleware is applied for requests in order
+of appearance in MIDDLEWARE, and in reverse order for responses
+
+
 
