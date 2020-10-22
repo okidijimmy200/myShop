@@ -64,3 +64,19 @@ coupons application directory and name it urls.py.
 order/create.html template
 
 --http://127.0.0.1:8000/orders/create/
+
+Lecture 3:
+Applying coupons to orders::
+--You are going to store the coupon that was applied to each order.
+edit the models of order file
+
+You need to create a migration to include the new fields of the Order model. Run the
+following command from the command line:
+********************python manage.py makemigrations*******************
+
+Apply the new migration with the following command:
+*****************python manage.py migrate orders************
+
+make an order
+
+

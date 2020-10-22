@@ -18,7 +18,15 @@ def order_create(request):
     if request.method == 'POST':
         form = OrderCreateForm(request.POST)
         if form.is_valid():
-            order = form.save()
+# You avoid saving it to the database yet by using commit=False.
+            order = form.save(commit=False)
+            if cart.coupon:
+                order.coupon = cart.coupon
+                order.discount = cart.coupon.discount
+# you create an Order object using the save() method of the OrderCreateForm form.
+            """If the cart contains a coupon, you store the related coupon and the
+discount that was applied. Then, you save the order object to the database."""
+            order.save()
             for item in cart:
                 OrderItem.objects.create(order=order,
                                          product=item['product'],
