@@ -35,3 +35,32 @@ Then, execute the next command to apply migrations:
 ******************python manage.py migrate***************
 
 --add the coupon to the adminstration site
+
+--fill in the coupon form
+
+Lecture 2:
+Applying a coupon to the shopping cart::
+You can store new coupons and make queries to retrieve existing coupons. Now
+you need a way for customers to apply coupons to their purchases. The functionality
+to apply a coupon would be as follows:
+1. The user adds products to the shopping cart.
+2. The user can enter a coupon code in a form displayed on the shopping
+cart detail page
+3. When the user enters a coupon code and submits the form, you look for
+an existing coupon with the given code that is currently valid. You have
+to check that the coupon code matches the one entered by the user, that the
+active attribute is True, and that the current datetime is between the valid_
+from and valid_to values.
+4. If a coupon is found, you save it in the user's session and display the cart,
+including the discount applied to it and the updated total amount.
+5. When the user places an order, you save the coupon to the given order.
+
+--create a forms.py file in the coupon directory
+
+-You need a URL pattern for the coupon_apply view. Create a new file inside the
+coupons application directory and name it urls.py.
+
+--add the coupon to the next step of the purchase process. Edit the orders/
+order/create.html template
+
+--http://127.0.0.1:8000/orders/create/

@@ -9,7 +9,8 @@ urlpatterns = [
     #this pattern shd be above shop.urls bse its more restrictive
     path('cart/', include('cart.urls', namespace='cart')),
     path('orders/', include('orders.urls',namespace='orders')), #shd b before shop
-    path('payment/', include('payment.urls', namespace='payment')), 
+    path('payment/', include('payment.urls', namespace='payment')), #shd b before shop
+    path('coupons/', include('coupons.urls', namespace='coupons')), #shd b before shop
 # URLs for the shop application under a custom namespace named shop.
     path('', include('shop.urls', namespace='shop')),
 

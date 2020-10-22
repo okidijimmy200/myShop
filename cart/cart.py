@@ -1,7 +1,7 @@
 from decimal import Decimal
 from django.conf import settings
 from shop.models import Product
-
+from coupons.models import Coupon
 
 class Cart(object):
 
@@ -17,6 +17,8 @@ class Cart(object):
             # save an empty cart in the session
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
+         # store current applied coupon(initialize the coupon from the current session:)
+        self.coupon_id = self.session.get('coupon_id')
 # You will build your cart dictionary with product IDs as keys, and for each product
 # key, a dictionary will be a value that includes quantity and price.
 # guarantee that a product will not be added more than once to the cart.
@@ -96,3 +98,25 @@ class Cart(object):
 # calculate the total cost of the items in the cart:
     def get_total_price(self):
         return sum(Decimal(item['price']) * item['quantity'] for item in self.cart.values())
+   
+# here u try to get the coupon_id session key from the current session and store its value in the Cart object.
+    @property
+# coupon(): You define this method as a property. If the cart contains a coupon_id attribute, the Coupon object with the given ID is returned.
+    def coupon(self):
+        if self.coupon_id:
+            try:
+                return Coupon.objects.get(id=self.coupon_id)
+            except Coupon.DoesNotExist:
+                pass
+        return None
+
+# get_discount(): If the cart contains a coupon, you retrieve its discount rate and return the amount to be deducted from the total amount of the cart.
+    def get_discount(self):
+        if self.coupon:
+            return (self.coupon.discount / Decimal(100)) \
+                * self.get_total_price()
+        return Decimal(0)
+# get_total_price_after_discount(): You return the total amount of the cart after deducting the amount returned by the get_discount() method.
+    def get_total_price_after_discount(self):
+        return self.get_total_price() - self.get_discount()
+
