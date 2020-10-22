@@ -117,3 +117,17 @@ add a link to the PDF file for each result.
 
 --Ensure the development server is started. Open http://127.0.0.1:8000/admin/
 orders/order/ in your browser.
+
+Lecture 4:
+Sending PDF files by email::
+--When a payment is successful, you will send an automatic email to your customer
+including the generated PDF invoice. You will create an asynchronous task to
+perform this action.
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' incase you want to write
+emails to the console else implement the email setting
+
+--You call the payment_completed task when a payment is successfully completed.
+Then, you call the delay() method of the task to execute it asynchronously. The
+task will be added to the queue and will be executed by a Celery worker as soon
+as possible.

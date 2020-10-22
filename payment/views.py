@@ -2,7 +2,7 @@ import braintree
 from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from orders.models import Order
-# from .tasks import payment_completed
+from .tasks import payment_completed
 
 
 # instantiate Braintree payment gateway
@@ -44,9 +44,11 @@ def payment_process(request):
             order.braintree_id = result.transaction.id
             order.save()
             # launch asynchronous task
+# You call the payment_completed task when a payment is successfully completed. Then, you call the delay() method of the task to execute it asynchronously. The
+# task will be added to the queue and will be executed by a Celery worker as soon as possible.
+            payment_completed.delay(order.id)
 # You redirect the user to the payment:done URL if the payment is successful; otherwise, you redirect
 # them to payment:canceled.
-            # payment_completed.delay(order.id)
             return redirect('payment:done')
         else:
             return redirect('payment:canceled')
