@@ -177,3 +177,10 @@ BRAINTREE_CONF = braintree.Configuration(
 
 # project's path where statci files reside
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
+'''The LOCALE_PATHS setting specifies the directories where Django has to look for
+translation files. Locale paths that appear first have the highest precedence'''
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale/'),
+)

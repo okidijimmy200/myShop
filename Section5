@@ -186,5 +186,11 @@ each middleware can depend on data set by other middleware
 executed previously. Middleware is applied for requests in order
 of appearance in MIDDLEWARE, and in reverse order for responses
 
+--The locale directory is the place where message files for your application will
+reside. Edit the settings.py file
+
+--When you use the makemessages command from your project directory, message
+files will be generated in the locale/ path you created. However, for applications
+that contain a locale/ directory, message files will be generated in that directory.
 
 
