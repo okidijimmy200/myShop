@@ -73,3 +73,45 @@ if you serve Django with a real web server, you will have to reload
 your server after running the compilemessages command, or
 after saving the translations with Rosetta, for changes to take effect.
 
+Lecture 2:
+Fuzzy translations::
+--You might have noticed that there is a FUZZY column in Rosetta. This is not
+a Rosetta feature; it is provided by gettext. If the fuzzy flag is active for a translation,
+it will not be included in the compiled message files.
+--This flag marks translation strings that need to be reviewed by a translator.
+
+URL patterns for internationalization::
+Django offers internationalization capabilities for URLs. It includes two main
+features for internationalized URLs:
+• Language prefix in URL patterns: Adding a language prefix to URLs
+to serve each language version under a different base URL
+• Translated URL patterns: Translating URL patterns so that every URL
+is different for each language
+
+--A reason for translating URLs is to optimize your site for search engines. By
+adding a language prefix to your patterns, you will be able to index a URL for each
+language instead of a single URL for all of them.
+
+Adding a language prefix to URL patterns::
+--Django allows you to add a language prefix to your URL patterns. For example,
+the English version of your site can be served under a path starting /en/, and the
+Spanish version under /es/.
+
+--languages in URL patterns, you have to use
+the LocaleMiddleware provided by Django. The framework will use it to identify
+the current language from the requested URL.
+
+--You can combine non-translatable standard URL patterns and patterns under
+i18n_patterns so that some patterns include a language prefix and others don't.
+
+Translating URL patterns::
+--Django supports translated strings in URL patterns. You can use a different
+translation for each language for a single URL pattern. You can mark URL patterns
+for translation in the same way as you would with literals, using the gettext_
+lazy() function.
+
+Open the shell and run the next command to update the message files with the new
+translations:
+*********************django-admin makemessages --all****************
+
+--Open http://127.0.0.1:8000/en/rosetta/ in your browser and click the Myshop link under the Spanish section
