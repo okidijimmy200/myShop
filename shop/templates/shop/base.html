@@ -1,3 +1,4 @@
+<!-- You load the internationalization tags using  load i18n-->
 {% load i18n %}
 {% load static %}
 <!DOCTYPE html>
@@ -10,9 +11,17 @@
     <body>
         <div id="header">
             <a href="/" class="logo">{% trans "My shop" %}</a>
+            <!-- You use the get_current_language  tag to retrieve the current
+language -->
             {% get_current_language as LANGUAGE_CODE %}
+            <!-- You get the languages defined in the LANGUAGES setting using the  get_
+available_languages  template tag -->
             {% get_available_languages as LANGUAGES %}
+            <!-- You use the tag  get_language_info_list  to provide easy access to
+the language attributes -->
             {% get_language_info_list for LANGUAGES as languages %}
+            <!-- You build an HTML list to display all available languages and you add a
+selected class attribute to the current active language -->
             <div class="languages">
               <p>{% trans "Language" %}:</p>
               <ul class="languages">

@@ -61,6 +61,14 @@ edit .po files and it updates compiled translation files
 THIRD PARTY to display all the available message files, including those that belong
 to the orders application.
 
+Lecture 4:
+Allowing users to switch language::
+--Since you are serving content that is available in multiple languages, you should
+let your users switch the site's language. You are going to add a language selector to
+your site.
+
+
+
 --Click the Myshop link under the Spanish section to edit the Spanish translations.
 You should see a list of translation strings
 
