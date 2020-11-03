@@ -1,0 +1,33 @@
+Lecture 1:
+Translating templates::
+--Django offers the {% trans %} and {% blocktrans %} template tags to translate
+strings in templates. In order to use the translation template tags, you have to add
+{% load i18n %} at the top of your template to load them.
+
+The {% trans %} template tag::
+--The {% trans %} template tag allows you to mark a literal for translation. Internally,
+Django executes gettext() on the given text.
+
+--{% trans "Text to be translated" %}
+
+--You can use as to store the translated content in a variable that you can use
+throughout your template.
+
+--{% trans "Hello!" as greeting %}
+<h1>{{ greeting }}</h1>
+
+--The {% trans %} tag is useful for simple translation strings, but it can't handle
+content for translation that includes variables.
+
+The {% blocktrans %} template tag::
+--The {% blocktrans %} template tag allows you to mark content that includes
+literals and variable content using placeholders.
+
+eg
+{% blocktrans %}Hello {{ name }}!{% endblocktrans %}
+
+NB:
+Use the {% blocktrans %} tag instead of {% trans %} when
+you need to include variable content in your translation string.
+
+Lecture 2
