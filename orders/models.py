@@ -7,13 +7,16 @@ from django.core.validators import MinValueValidator, \
 from django.utils.translation import gettext_lazy as _
 
 # The Order model contains several fields to store customer information and a paid Boolean field,
+'''You have added names for the fields that are displayed when a user is placing a new
+order. These are first_name, last_name, email, address, postal_code, and city.
+Remember that you can also use the verbose_name attribute to name the fields'''
 class Order(models.Model):
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    email = models.EmailField()
-    address = models.CharField(max_length=250)
-    postal_code = models.CharField(max_length=20)
-    city = models.CharField(max_length=100)
+    first_name = models.CharField(_('first name'), max_length=50)
+    last_name = models.CharField(_('last name'), max_length=50)
+    email = models.EmailField(_('email'))
+    address = models.CharField(_('address'), max_length=250)
+    postal_code = models.CharField(_('postal code'), max_length=20)
+    city = models.CharField(_('city'), max_length=100)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)

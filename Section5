@@ -194,3 +194,101 @@ files will be generated in the locale/ path you created. However, for applicatio
 that contain a locale/ directory, message files will be generated in that directory.
 
 
+Lecture 5:
+Translating Python code::
+--To translate literals in your Python code, you can mark strings for translation using
+the gettext() function included in django.utils.translation. This function
+translates the message and returns a string.
+
+Standard translations::
+--The following code shows how to mark a string for translation:
+from django.utils.translation import gettext as _
+output = _('Text to be translated.')
+
+Lazy translations::
+--Django includes lazy versions for all of its translation functions, which have the
+suffix _lazy(). When using the lazy functions, strings are translated when the value
+is accessed, rather than when the function is called (this is why they are translated
+lazily). The lazy translation functions come in handy when strings marked for
+translation are in paths that are executed when modules are loaded.
+
+--Using gettext_lazy() instead of gettext() means that strings
+are translated when the value is accessed. Django offers a lazy
+version for all translation functions
+
+Translations including variables::
+--The strings marked for translation can include placeholders to include variables
+in the translations.
+eg:
+
+from django.utils.translation import gettext as _
+month = _('April')
+day = '14'
+output = _('Today is %(month)s %(day)s') % {'month': month,
+'day': day}
+
+--By using placeholders, you can reorder the text variables
+
+Always use string interpolation instead of positional
+interpolation when you have more than one parameter for the translation string.
+By doing so, you will be able to reorder the placeholder text.
+
+Plural forms in translations::
+--For plural forms, you can use ngettext() and ngettext_lazy(). These functions
+translate singular and plural forms depending on an argument that indicates the
+number of objects.
+eg:
+output = ngettext('there is %(count)d product',
+'there are %(count)d products',
+count) % {'count': count}
+
+Translating your own code::
+********django-admin makemessages --all**********
+
+--Take a look at the locale/ directory., we have django.po files
+
+A .po message file has been created for each language.
+
+--Each translation string is preceded by a comment showing details about the file and
+the line where it was found
+
+Each translation includes
+• msgid: The translation string as it appears in the source code.
+• msgstr: The language translation, which is empty by default. This is where
+you have to enter the actual translation for the given string.
+
+fill in the msgtr translation for the given msgid string
+#: myshop/settings.py:118
+msgid "English"
+msgstr "Inglés"
+#: myshop/settings.py:119
+msgid "Spanish"
+msgstr "Español"
+
+Save the modified message file, open the shell, and run the following command:
+******************django-admin compilemessages***********
+
+--The output gives you information about the message files that are being compiled.
+
+--we get a django.mo file
+
+--You have translated the language names themselves
+--, let's translate the model
+field names that are displayed in the site.
+
+--By creating a locale directory, translation strings of this application will be stored in
+a message file under this directory instead of the main messages file. In this way, you
+can generate separate translation files for each application.
+
+*********django-admin makemessages --all*************
+
+--a text editor, you can use Poedit to edit translations.
+
+--Let's also translate the forms of your project. The OrderCreateForm of the orders
+application does not have to be translated, since it is a ModelForm and it uses the
+verbose_name attribute of the Order model fields for the form field labels. You
+are going to translate the forms of the cart and coupons applications
+
+
+
+

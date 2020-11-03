@@ -120,6 +120,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
+'''Here, you use the gettext_lazy() function instead of gettext() to avoid a circular
+import, thus translating the languages' names when they are accessed.'''
 from django.utils.translation import gettext_lazy as _
 
 # The LANGUAGES setting contains two tuples that consist of a language code and a name
