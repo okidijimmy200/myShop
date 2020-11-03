@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'payment.apps.PaymentConfig',
     'coupons.apps.CouponsConfig',
     'rosetta',
+    'parler',
 ]
 
 MIDDLEWARE = [
@@ -130,6 +131,19 @@ LANGUAGES = (
     ('en', _('English')),
     ('es', _('Spanish')),
 )
+'''This setting defines the available languages, en and es, for django-parler. You
+specify the default language en and indicate that django-parler should not hide
+untranslated content.'''
+PARLER_LANGUAGES = {
+    None: (
+        {'code': 'en'},
+        {'code': 'es'},
+    ),
+    'default': {
+        'fallback': 'en',
+        'hide_untranslated': False,
+    }
+}
 
 TIME_ZONE = 'UTC'
 

@@ -1,17 +1,21 @@
 from django.db import models
 from django.urls import reverse
+from parler.models import TranslatableModel, TranslatedFields
 
-
-class Category(models.Model):
+'''The Category model now inherits from TranslatableModel instead of models.
+Model and both the name and slug fields are included in the TranslatedFields
+wrapper'''
+class Category(TranslatableModel):
     # name field
+    translations = TranslatedFields(
     name = models.CharField(max_length=200,
                             db_index=True)
     # unique slug field (unique implies the creation of an index
     slug = models.SlugField(max_length=200,
                             unique=True)
-
+    )
     class Meta:
-        ordering = ('name',)
+        # ordering = ('name',)
         verbose_name = 'category'
         verbose_name_plural = 'categories'
 
@@ -23,12 +27,10 @@ class Category(models.Model):
                        args=[self.slug])
 
 
-class Product(models.Model):
-# category: A ForeignKey to the Category model. This is a one-to-many relationship: a product belongs to one category and a category contains
-# multiple products.
-    category = models.ForeignKey(Category,
-                                 related_name='products',
-                                 on_delete=models.CASCADE)
+'''add translations for the name, slug, and description
+fields,'''
+class Product(TranslatableModel):
+    translations = TranslatedFields(
     # name
     name = models.CharField(max_length=200, db_index=True)
 # slug: The slug for this product to build beautiful URLs.
@@ -36,6 +38,12 @@ class Product(models.Model):
 # image: An optional product image.
     image = models.ImageField(upload_to='products/%Y/%m/%d',
                               blank=True)
+    )
+    # category: A ForeignKey to the Category model. This is a one-to-many relationship: a product belongs to one category and a category contains
+# multiple products.
+    category = models.ForeignKey(Category,
+                                 related_name='products',
+                                 on_delete=models.CASCADE)
 # description: An optional description of the product.
     description = models.TextField(blank=True)
 # price: This field uses Python's decimal.Decimal type to store a fixedprecision decimal number. The maximum number of digits (including
@@ -50,10 +58,12 @@ class Product(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ('name',)
+        '''The current version of django-parler does not provide support
+to validate index_together'''
+        # ordering = ('name',)
 # index_together meta option to specify an index for the id and slug fields together
 # You define this index because you plan to query products by both id and slug.
-        index_together = (('id', 'slug'),)
+        # index_together = (('id', 'slug'),)
 
     def __str__(self):
         return self.name
