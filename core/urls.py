@@ -11,6 +11,7 @@ urlpatterns = [
     path('orders/', include('orders.urls',namespace='orders')), #shd b before shop
     path('payment/', include('payment.urls', namespace='payment')), #shd b before shop
     path('coupons/', include('coupons.urls', namespace='coupons')), #shd b before shop
+    path('rosetta/', include('rosetta.urls')), #shd be b4 shop
 # URLs for the shop application under a custom namespace named shop.
     path('', include('shop.urls', namespace='shop')),
 

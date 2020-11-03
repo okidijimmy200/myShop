@@ -31,3 +31,45 @@ Use the {% blocktrans %} tag instead of {% trans %} when
 you need to include variable content in your translation string.
 
 Lecture 2
+Translating the shop templates::
+--Edit the shop/base.html template of the shop application.
+
+Let's update the message files to include the new translation strings.
+
+***************************django-admin makemessages --all**********************************
+
+--The .po files are inside the locale directory of the myshop project and you'll see that
+the orders application now contains all the strings that you marked for translation
+
+--Edit the .po translation files of the project and the orders application, and include
+Spanish translations in the msgstr
+
+Lecture 3:
+Using the Rosetta translation interface::
+--Rosetta is a third-party application that allows you to edit translations using
+the same interface as the Django administration site. Rosetta makes it easy to
+edit .po files and it updates compiled translation files
+
+**************pip install django-rosetta==0.9.3*************8
+
+--You need to add Rosetta's URLs to your main URL configuration
+
+--Open http://127.0.0.1:8000/admin/ and log in with a superuser.
+-then navigate to http://127.0.0.1:8000/rosetta/
+
+--In the Filter menu, click
+THIRD PARTY to display all the available message files, including those that belong
+to the orders application.
+
+--Click the Myshop link under the Spanish section to edit the Spanish translations.
+You should see a list of translation strings
+
+--If you want other users to be able to edit translations, open
+http://127.0.0.1:8000/admin/auth/group/add/ in your browser and create
+a new group named translators.
+
+When you add new translations to your production environment,
+if you serve Django with a real web server, you will have to reload
+your server after running the compilemessages command, or
+after saving the translations with Rosetta, for changes to take effect.
+
