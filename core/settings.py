@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'coupons.apps.CouponsConfig',
     'rosetta',
     'parler',
+    'localflavor',
 ]
 
 MIDDLEWARE = [
@@ -201,3 +202,7 @@ translation files. Locale paths that appear first have the highest precedence'''
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale/'),
 )
+# settings required to establish a connection with the Redis server
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+REDIS_DB = 1

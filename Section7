@@ -1,0 +1,87 @@
+Lecture 1:
+Building a recommendation Engine:
+A recommendation engine is a system that predicts the preference or rating that
+a user would give to an item. The system selects relevant items for a user based on
+their behavior and the knowledge it has about them.
+
+You are going to suggest complementary products in two different scenarios::
+---Product detail page: You will display a list of products that are usually
+bought with the given product. This will be displayed as users who bought
+this also bought X, Y, Z. You need a data structure that allows you to store
+the number of times that each product has been bought together with the
+product being displayed
+
+--Cart detail page: Based on the products users add to the cart, you are going
+to suggest products that are usually bought together with these ones. In this
+case, the score you calculate to obtain related products has to be aggregated.
+
+--You are going to use Redis to store products that are purchased together
+
+Recommending products based on previous purchases::
+--You will recommend products to users based on what they have added to the cart.
+You are going to store a key in Redis for each product bought on your site. The
+product key will contain a Redis sorted set with scores. You will increment the score
+by 1 for each product bought together every time a new purchase is completed. The
+sorted set will allow you to give scores to products that are bought together.
+
+******************************pip install redis==3.4.1*************8]
+
+--start the redis server
+*****python manage.py shell******8
+
+Make sure that you have at least four different products in your database. Retrieve
+four different products by their names:
+>>> from shop.models import Product
+>>> black_tea = Product.objects.get(translations__name='Black tea')
+>>> red_tea = Product.objects.get(translations__name='Red tea')
+>>> green_tea = Product.objects.get(translations__name='Green tea')
+>>> tea_powder = Product.objects.get(translations__name='Tea powder')
+
+Then, add some test purchases to the recommendation engine:
+>>> from shop.recommender import Recommender
+>>> r = Recommender()
+>>> r.products_bought([black_tea, red_tea])
+>>> r.products_bought([black_tea, green_tea])
+>>> r.products_bought([red_tea, black_tea, tea_powder])
+>>> r.products_bought([green_tea, tea_powder])
+>>> r.products_bought([black_tea, tea_powder])
+>>> r.products_bought([red_tea, green_tea])
+
+--You have stored the following scores:
+black_tea: red_tea (2), tea_powder (2), green_tea (1)
+red_tea: black_tea (2), tea_powder (1), green_tea (1)
+green_tea: black_tea (1), tea_powder (1), red_tea(1)
+tea_powder: black_tea (2), red_tea (1), green_tea (1)
+
+--Let's activate a language to retrieve translated products and get product
+recommendations to buy together with a given single product:
+>>> from django.utils.translation import activate
+>>> activate('en')
+>>> r.suggest_products_for([black_tea])
+[<Product: Tea powder>, <Product: Red tea>, <Product: Green tea>]
+>>> r.suggest_products_for([red_tea])
+[<Product: Black tea>, <Product: Tea powder>, <Product: Green tea>]
+>>> r.suggest_products_for([green_tea])
+[<Product: Black tea>, <Product: Tea powder>, <Product: Red tea>]
+>>> r.suggest_products_for([tea_powder])
+[<Product: Black tea>, <Product: Red tea>, <Product: Green tea>]
+
+--Let's
+get recommendations for multiple products with aggregated scores:
+>>> r.suggest_products_for([black_tea, red_tea])
+[<Product: Tea powder>, <Product: Green tea>]
+>>> r.suggest_products_for([green_tea, red_tea])
+[<Product: Black tea>, <Product: Tea powder>]
+>>> r.suggest_products_for([tea_powder, black_tea])
+[<Product: Red tea>, <Product: Green tea>]
+
+--You can see that the order of the suggested products matches the aggregated scores.
+For example, products
+
+--You are also going to include product recommendations in the cart. The
+recommendations will be based on the products that the user has added to the cart
+
+--Edit the cart/detail.html template of the cart application and add the following
+code just after the </table> HTML tag:
+
+

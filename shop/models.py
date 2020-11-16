@@ -8,11 +8,12 @@ wrapper'''
 class Category(TranslatableModel):
     # name field
     translations = TranslatedFields(
-    name = models.CharField(max_length=200,
-                            db_index=True)
-    # unique slug field (unique implies the creation of an index
-    slug = models.SlugField(max_length=200,
-                            unique=True)
+        name = models.CharField(max_length=200,
+                                db_index=True),
+        # unique slug field (unique implies the creation of an index
+        slug = models.SlugField(max_length=200,
+                                db_index=True,
+                                unique=True)
     )
     class Meta:
         # ordering = ('name',)
@@ -32,9 +33,9 @@ fields,'''
 class Product(TranslatableModel):
     translations = TranslatedFields(
     # name
-    name = models.CharField(max_length=200, db_index=True)
+    name = models.CharField(max_length=200, db_index=True),
 # slug: The slug for this product to build beautiful URLs.
-    slug = models.SlugField(max_length=200, db_index=True)
+    slug = models.SlugField(max_length=200, db_index=True),
 # image: An optional product image.
     image = models.ImageField(upload_to='products/%Y/%m/%d',
                               blank=True)
